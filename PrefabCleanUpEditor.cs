@@ -115,9 +115,15 @@ public class PrefabCleanUpEditor : EditorWindow
                     {
                         subfolder = "Meshes";
                     }
+                    else
+                    {
+                        // Any other asset type that is not explicitly handled and not skipped
+                        // (like shaders/scripts) will be placed in a "Misc" folder.
+                        subfolder = "Misc";
+                    }
                 }
 
-                if (string.IsNullOrEmpty(subfolder) || Path.GetDirectoryName(path).EndsWith(subfolder)) continue;
+                if (Path.GetDirectoryName(path).EndsWith(subfolder)) continue;
 
                 string targetFolder = Path.Combine(prefabDirectory, subfolder);
                 if (!Directory.Exists(targetFolder))
@@ -277,4 +283,5 @@ public class PrefabCleanUpEditor : EditorWindow
         return null;
     }
 }
+
 
