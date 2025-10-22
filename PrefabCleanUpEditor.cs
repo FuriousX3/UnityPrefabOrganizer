@@ -196,10 +196,22 @@ public class PrefabCleanUpEditor : EditorWindow
 
         for (int i = 0; i < oldAssets.Length; i++)
         {
+            // AssetDatabase.LoadAllAssetsAtPath can return null entries, so check for them.
+            if (oldAssets[i] == null)
+            {
+                continue;
+            }
+
             // Find the corresponding new asset by type and name, as order is not guaranteed
             Object correspondingNewAsset = null;
             for(int j=0; j<newAssets.Length; j++)
             {
+                // Also check the new asset for null entries.
+                if (newAssets[j] == null)
+                {
+                    continue;
+                }
+
                 if(oldAssets[i].GetType() == newAssets[j].GetType() && oldAssets[i].name == newAssets[j].name)
                 {
                     correspondingNewAsset = newAssets[j];
@@ -283,5 +295,4 @@ public class PrefabCleanUpEditor : EditorWindow
         return null;
     }
 }
-
 
